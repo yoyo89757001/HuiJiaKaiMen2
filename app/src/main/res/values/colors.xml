@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+
+    <color name="img_full_opaque">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="huise33">#34e9d2d6</color>
+    <color name="lanse33">#1b37d6</color>
+
+    <color name="result_minor_text">#ffc0c0c0</color>
+
+
+    <color name="colorBar_bg">#0d2cf9</color>
+    <color name="tabtextcolo">#b7868686</color>
+    <color name="jinhuang">#fbff00</color>
+    <!-- 半透明 -->
+
+    <color name="colorAccent">#FF4081</color>
+    <color name="lanse">#0166FF</color>
+    <color name="write">#ffffff</color>
+    <color name="view_bg">#eae9e9</color>
+    <color name="textcolor">#878686</color>
+    <color name="textcolor2">#a7a6a6</color>
+    <color name="titlecolor">#0166FF</color>
+    <color name="blake">#333333</color>
+    <color name="transparent">#00000000</color>
+    <color name="red">#ef1616</color>
+    <color name="lvse">#05e6a6</color>
+    <color name="pianbai">#c8f7f4f4</color>
+    <!-- 橙色 -->
+    <color name="dark_grey">#e2e1e1</color><!-- 深灰 -->
+    <color name="hegong">#640107</color>
+
+    <color name="touming22">#59000000</color>
+
+</resources>

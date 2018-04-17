@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ffflll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:id="@+id/ggghhh"
+        android:layout_toRightOf="@+id/touxiang"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="70sp"
+                android:id="@+id/zuowei2"
+                android:gravity="center"
+                android:layout_weight="0.4"
+                android:textColor="@color/write"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:textSize="70sp"
+                android:id="@+id/name33"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/write"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:textSize="70sp"
+                android:id="@+id/zhuangtai33"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/write"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:textSize="70sp"
+                android:id="@+id/zuowei"
+                android:gravity="center"
+                android:layout_weight="0.4"
+                android:textColor="@color/write"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <ImageView
+        android:id="@+id/touxiang"
+        android:layout_width="180dp"
+        android:padding="20dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_height="180dp"
+        android:scaleType="fitXY" />
+
+
+
+
+</RelativeLayout>
