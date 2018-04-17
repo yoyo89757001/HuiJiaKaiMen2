@@ -82,6 +82,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -131,7 +133,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	Handler mHandler;
 	private RecyclerView recyclerView2;
 	private WrapContentLinearLayoutManager manager2;
-
+	private BlockingQueue<String> basket = new LinkedBlockingQueue<String>(5);
 	private static Vector<MenBean> menBeansList=new Vector<>();
 
 	private static boolean isA=true;
@@ -141,7 +143,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 	private static Vector<Bitmap> bitmapList=new Vector<>();
 
-	private final int TIMEOUT=1000*3;
+	private final int TIMEOUT=1000*30;
 	private  String screen_token=null;
 
 
@@ -222,7 +224,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 											try {
 
-												SystemClock.sleep(12000);
+												SystemClock.sleep(8000);
 												Message message = Message.obtain();
 												message.what = 999;
 												handler.sendMessage(message);
@@ -777,23 +779,30 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 //			Log.d(TAG, "Face:" + face.toString());
 //		}
 		AFT_FSDKError err = engine.AFT_FSDK_FaceFeatureDetect(data, width, height, AFT_FSDKEngine.CP_PAF_NV21, result);
+
 		if (isA) {
 			isA=false;
+			final int size=result.size();
 			if (!result.isEmpty()) {
-
 					if (bitmapList.size()>0){
 						bitmapList.clear();
 						adapter.notifyDataSetChanged();
 					}
-					final int size=result.size();
 					for (AFT_FSDKFace fsdkFace : result){
-
 						YuvImage yuv = new YuvImage(data, ImageFormat.NV21, mWidth, mHeight, null);
 						ExtByteArrayOutputStream ops = new ExtByteArrayOutputStream();
 						yuv.compressToJpeg(fsdkFace.getRect(), 100, ops);
 						final Bitmap bmp = BitmapFactory.decodeByteArray(ops.getByteArray(), 0, ops.getByteArray().length);
 						bitmapList.add(bmp);
 						adapter.notifyDataSetChanged();
+						try {
+							basket.put("An apple");
+							Log.d("hhhhhh", "插入成功");
+						} catch (InterruptedException e) {
+							Log.d("hhhhhh", e.getMessage()+"插入异常");
+							basket.clear();
+							isA=true;
+						}
 						new Thread(new Runnable() {
 							@Override
 							public void run() {
@@ -818,6 +827,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						}
 
 					}
+
 
 
 		}
@@ -911,7 +921,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	}
 
 
-	public static final int TIMEOUT2 = 1000 * 3;
+	public static final int TIMEOUT2 = 1000 * 5;
 	// 1:N 对比
 	private void link_P2(final File file, final int size) {
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -923,7 +933,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				.build();
 		;
 		MultipartBody mBody;
-		MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+		final MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
 		RequestBody fileBody1 = RequestBody.create(MediaType.parse("application/octet-stream"),file);
 
@@ -945,9 +955,14 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 			public void onFailure(Call call, IOException e) {
 				Log.d("AllConnects", "请求识别失败" + e.getMessage());
 				SystemClock.sleep(300);
-				if (++faceSize>size){
+				try {
+					basket.take();
+					if (basket.size()==0)
+						isA=true;
+				} catch (InterruptedException e1) {
+					basket.clear();
 					isA=true;
-					faceSize=1;
+					e1.printStackTrace();
 				}
 			}
 
@@ -985,9 +1000,14 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 					Log.d("WebsocketPushMsg", e.getMessage()+"");
 				}finally {
 					SystemClock.sleep(300);
-					if (++faceSize>size){
+					try {
+						basket.take();
+						if (basket.size()==0)
+							isA=true;
+					} catch (InterruptedException e1) {
+						basket.clear();
 						isA=true;
-						faceSize=1;
+						e1.printStackTrace();
 					}
 				}
 
